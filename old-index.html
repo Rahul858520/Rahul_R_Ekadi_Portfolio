@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Rahul Ekadi — Web Developer</title>
+    <meta name="description" content="Portfolio of Rahul Ekadi — Web Developer specializing in .NET, HTML, CSS, Bootstrap, and SQL." />
+    <meta name="keywords" content="Rahul Ekadi, Web Developer, Portfolio, .NET, HTML, CSS, Bootstrap, SQL" />
+    <meta name="author" content="Rahul Ekadi" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Icons & animate.css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <style>
+      :root{
+        --bg-1: linear-gradient(120deg,#071021 0%, #0f1724 40%, #071021 100%);
+        --glass: rgba(255,255,255,0.04);
+        --accent: #6c63ff;
+        --accent-2: #00d4ff;
+        /* TEXT COLORS for dark mode (default) */
+        --text-main: #e6eef8;
+        --text-muted: #ffffff; /* Option A: pure white for muted */
+        --icon-color: #ffffff;
+        --card-bg: rgba(255,255,255,0.02);
+      }
+
+      /* Light mode overrides when [data-light] is present on the html element */
+      html[data-light] {
+        --bg-1: linear-gradient(120deg,#f5f7ff 0%, #eef7ff 60%, #f5f7ff 100%);
+        --text-main: #0b1220;
+        --text-muted: #000000; /* black in light mode */
+        --icon-color: #000000;
+        --card-bg: rgba(11,18,32,0.02);
+      }
+
+      html,body{height:100%;}
+      body{
+        margin:0;
+        font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+        background: var(--bg-1);
+        color: var(--text-main);
+        -webkit-font-smoothing:antialiased;
+        -moz-osx-font-smoothing:grayscale;
+      }
+
+      /* Floating color blobs */
+      .blob-container{position:fixed;inset:0;pointer-events:none;z-index:0;}
+      .blob{position:absolute;border-radius:50%;filter:blur(56px);opacity:.14;transform:translate3d(0,0,0);}
+      .b1{width:420px;height:420px;background:radial-gradient(circle at 30% 30%, #6c63ff, transparent 40%);left:-80px;top:-40px;}
+      .b2{width:320px;height:320px;background:radial-gradient(circle at 70% 30%, #00d4ff, transparent 40%);right:-40px;top:80px;}
+      .b3{width:260px;height:260px;background:radial-gradient(circle at 40% 60%, #ff6b6b, transparent 40%);left:20%;bottom:120px;}
+
+      /* Navbar */
+      .navbar{background:transparent !important; position:sticky; top:0; z-index:999; padding-top:1rem; padding-bottom:1rem;}
+      .nav-glass{background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02)); backdrop-filter: blur(8px); border-radius:12px; padding: .4rem 1rem; border:1px solid rgba(255,255,255,0.04);}
+      .brand{font-family: "Poppins", "Inter", sans-serif; font-weight:700; letter-spacing:0.4px; font-size:20px; color: var(--text-main); }
+
+      .nav-link { color: var(--text-main) !important; font-weight:600; }
+      .navbar .btn { color: var(--text-main); }
+
+      /* Hero */
+      #hero{min-height:86vh; display:flex; align-items:center; position:relative; z-index:2;}
+      .hero-left h1{font-size:44px; font-weight:800; line-height:1; margin-bottom:.4rem; letter-spacing:-1px;}
+      .hero-left p.lead{color:var(--text-muted); font-size:1.05rem; max-width:640px;}
+      .cta-btns .btn{border-radius:12px; padding: .68rem 1.1rem; font-weight:600;}
+      .card-hero{background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02)); border-radius:18px; padding:1rem; border:1px solid rgba(255,255,255,0.04); box-shadow: 0 20px 60px rgba(2,6,23,0.6); color:var(--text-main); background:var(--card-bg);}
+      .hero-image-wrapper{display:flex; align-items:center; justify-content:center;}
+
+      /* Skill bars */
+      .skill-bar{background:rgba(255,255,255,0.04); border-radius:14px; padding:8px; margin-bottom:12px; background:rgba(0,0,0,0.12);}
+      .skill-fill{height:12px; border-radius:10px; background:linear-gradient(90deg,var(--accent),var(--accent-2)); width:0%; transition: width 1.2s cubic-bezier(.19,1,.22,1);}
+
+      /* Projects grid */
+      .project-card{border-radius:12px; overflow:hidden; position:relative; transition: transform .28s ease, box-shadow .28s ease; border:1px solid rgba(255,255,255,0.04); background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));}
+      .project-card:hover{transform:translateY(-8px); box-shadow: 0 18px 60px rgba(2,6,23,0.7);}
+      .project-overlay{position:absolute; inset:0; display:flex; align-items:end; padding:1rem; background:linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.45) 60%); color:var(--text-main);}
+
+      /* Contact */
+      .contact-card{border-radius:12px; padding:1.2rem; background:var(--card-bg); border:1px solid rgba(255,255,255,0.04);}
+      .social-icons a{color:var(--icon-color); margin-right:0.6rem; font-size:1.2rem; opacity:.95; transition:transform .18s ease;}
+      .social-icons a:hover{transform:translateY(-4px); color:var(--accent); }
+
+      /* Muted text class used across site */
+      .muted { color: var(--text-muted) !important; }
+
+      /* Footer */
+      footer {padding:1.4rem 0; color:var(--text-muted);}
+
+      /* Scroll-top */
+      .scroll-top{position:fixed; right:20px; bottom:20px; width:48px; height:48px; border-radius:12px; background:linear-gradient(180deg,#111, #0b1220); display:flex; align-items:center; justify-content:center; box-shadow:0 12px 40px rgba(2,6,23,0.6); cursor:pointer; border:1px solid rgba(255,255,255,0.03); z-index:9999;}
+
+      /* responsive */
+      @media (max-width:992px){ .hero-left h1{font-size:36px;} .hero-left p.lead{font-size:1rem;} }
+      @media (max-width:576px){ .hero-left h1{font-size:28px;} }
+
+      /* small helper */
+      .small-muted { color: var(--text-muted); }
+      a.link-light { color: var(--text-main); text-decoration:underline; }
+      a.link-light:hover { color: var(--accent); }
+
+      /* ensure icons inherit currentColor where possible */
+      .bi { color: var(--icon-color); }
+      .btn-primary { background: linear-gradient(90deg,var(--accent),var(--accent-2)); border: none; }
+      .btn-outline-light { color: var(--text-main); border-color: rgba(255,255,255,0.08); }
+    </style>
+  </head>
+  <body>
+    <!-- decorative blobs -->
+    <div class="blob-container" aria-hidden="true">
+      <div class="blob b1"></div>
+      <div class="blob b2"></div>
+      <div class="blob b3"></div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container nav-glass">
+        <a class="navbar-brand brand" href="#hero">Rahul Ekadi</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navMenu">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+            <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+            <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+          </ul>
+
+          <div class="ms-3 d-flex align-items-center">
+            <a href="./files/Rahul_Ekadi_Resume.pdf" class="btn btn-sm btn-outline-light me-2" download>Resume</a>
+            <button id="themeToggle" class="btn btn-sm btn-primary" title="Toggle theme"><i class="bi bi-moon-fill"></i></button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section id="hero" class="py-5" role="banner">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6 hero-left" data-scroll-animation="fadeInLeft">
+            <h1 class="mb-2">Hi, I'm <span style="background:linear-gradient(90deg,var(--accent),var(--accent-2)); -webkit-background-clip:text; background-clip:text; color:transparent;">Rahul Ekadi</span></h1>
+            <p class="lead muted">A Web Developer building modern, responsive and accessible web experiences using .NET, Bootstrap, HTML, CSS and SQL. I love turning ideas into clean, maintainable code.</p>
+            <div class="mt-4 cta-btns d-flex gap-2">
+              <a class="btn btn-lg btn-primary" href="#projects">See Projects</a>
+              <a class="btn btn-lg btn-outline-light" href="#contact">Work with me</a>
+            </div>
+
+            <div class="row mt-4 g-3">
+              <div class="col-6 col-md-4">
+                <div class="card card-hero p-3 text-center">
+                  <div class="small small-muted">Experience</div>
+                  <div class="h5 mb-0">2+ yrs</div>
+                </div>
+              </div>
+              <div class="col-6 col-md-4">
+                <div class="card card-hero p-3 text-center">
+                  <div class="small small-muted">Projects</div>
+                  <div class="h5 mb-0">10+</div>
+                </div>
+              </div>
+              <div class="col-12 col-md-4">
+                <div class="card card-hero p-3 text-center">
+                  <div class="small small-muted">Location</div>
+                  <div class="h5 mb-0">Nashik, India</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 text-center" data-scroll-animation="fadeInRight">
+            <div class="card-hero" style="max-width:520px;margin:auto;">
+              <div class="hero-image-wrapper p-3">
+                <img src="original.jpg" alt="Rahul portrait" style="width:50%;border-radius:12px;object-fit:cover;" loading="lazy">
+              </div>
+              <div class="p-3 text-center small-muted">Open to freelance & full-time opportunities</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="py-5">
+      <div class="container">
+        <div class="row align-items-center g-4">
+          <div class="col-lg-6" data-scroll-animation="fadeInLeft">
+            <h2 class="mb-3">About Me</h2>
+            <p class="small-muted">I'm Rahul — a web developer who cares about readable code, delightful UI and building products that help users accomplish real goals. I work primarily with <strong>C#.NET</strong>, <strong>Bootstrap</strong>, and relational databases.</p>
+            <p class="small-muted">When I'm not coding, I experiment with micro-interactions and learn about scalable front-end architectures.</p>
+            <div class="mt-3 d-flex gap-2">
+              <a href="#projects" class="btn btn-sm btn-primary">View Work</a>
+              <a href="#contact" class="btn btn-sm btn-outline-light">Contact</a>
+            </div>
+          </div>
+          <div class="col-lg-6" data-scroll-animation="fadeInRight">
+            <div class="card contact-card p-4">
+              <h5 class="mb-3 text-light">Education</h5>
+              <div class="d-flex justify-content-between mb-2">
+                <div class="text-light"><strong>M.Sc. (Computer Application)</strong><div class="small-muted small">CGPA: 8.27</div></div>
+                <div class="small-muted">2025</div>
+              </div>
+              <hr class="my-3" style="border-color:rgba(255,255,255,0.04)">
+              <div class="d-flex justify-content-between mb-2">
+                <div class="text-light"><strong>B.Sc. (Computer Science)</strong><div class="small-muted small">64.82%</div></div>
+                <div class="small-muted">2023</div>
+              </div>
+              <hr class="my-3" style="border-color:rgba(255,255,255,0.04)">
+              <div class="d-flex justify-content-between">
+                <div class="text-light"><strong>HSC — Science</strong><div class="small-muted small">51.54%</div></div>
+                <div class="small-muted">2020</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="py-5">
+      <div class="container">
+        <div class="text-center mb-4">
+          <h2>Skills</h2>
+          <p class="small-muted">Tools and technologies I use frequently</p>
+        </div>
+        <div class="row g-4 justify-content-center">
+          <div class="col-md-6 col-lg-4" data-scroll-animation="fadeInUp">
+            <div class="card card-hero p-3">
+              <h6>Frontend</h6>
+              <div class="small-muted small mb-2">HTML, CSS, Bootstrap, JavaScript</div>
+              <div class="skill-bar"><div class="skill-fill" data-fill="90%"></div></div>
+              <div class="small small-muted">Responsive UI • Accessibility</div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4" data-scroll-animation="fadeInUp" data-scroll-delay="120">
+            <div class="card card-hero p-3">
+              <h6>Backend</h6>
+              <div class="small-muted small mb-2">C#, .NET, SQL</div>
+              <div class="skill-bar"><div class="skill-fill" data-fill="78%"></div></div>
+              <div class="small small-muted">APIs • Data Modeling</div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4" data-scroll-animation="fadeInUp" data-scroll-delay="240">
+            <div class="card card-hero p-3">
+              <h6>Tools</h6>
+              <div class="small-muted small mb-2">Git, GitHub, VS Code</div>
+              <div class="skill-bar"><div class="skill-fill" data-fill="86%"></div></div>
+              <div class="small small-muted">Version control • Collaboration</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="py-5">
+      <div class="container">
+        <div class="text-center mb-5">
+          <h2>Projects</h2>
+          <p class="small-muted">Selected projects — click to view more details.</p>
+        </div>
+
+        <div class="row g-4">
+          <!-- Project 1 -->
+          <div class="col-md-6 col-lg-4" data-scroll-animation="fadeInUp">
+            <div class="project-card">
+              <img src="./images/project1.jpg" alt="Bits and Bytes Services screenshot" style="width:100%;height:220px;object-fit:cover;display:block;">
+              <div class="project-overlay">
+                <div class="w-100">
+                  <div class="d-flex justify-content-between align-items-center mb-1">
+                    <div><strong>Bits and Bytes Services</strong></div>
+                    <div><button class="btn btn-sm btn-outline-light" data-bs-toggle="modal" data-bs-target="#projectModal1">Details</button></div>
+                  </div>
+                  <div class="small-muted small">Professional company website</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 2 -->
+          <div class="col-md-6 col-lg-4" data-scroll-animation="fadeInUp" data-scroll-delay="100">
+            <div class="project-card">
+              <img src="./images/project2.jpg" alt="Car Rental screenshot" style="width:100%;height:220px;object-fit:cover;display:block;">
+              <div class="project-overlay">
+                <div class="w-100">
+                  <div class="d-flex justify-content-between align-items-center mb-1">
+                    <div><strong>Car Rental Website</strong></div>
+                    <div><button class="btn btn-sm btn-outline-light" data-bs-toggle="modal" data-bs-target="#projectModal2">Details</button></div>
+                  </div>
+                  <div class="small-muted small">Client-facing booking website</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 3 -->
+          <div class="col-md-6 col-lg-4" data-scroll-animation="fadeInUp" data-scroll-delay="200">
+            <div class="project-card">
+              <img src="./images/project3.jpg" alt="Event Management screenshot" style="width:100%;height:220px;object-fit:cover;display:block;">
+              <div class="project-overlay">
+                <div class="w-100">
+                  <div class="d-flex justify-content-between align-items-center mb-1">
+                    <div><strong>Event Management System</strong></div>
+                    <div><button class="btn btn-sm btn-outline-light" data-bs-toggle="modal" data-bs-target="#projectModal3">Details</button></div>
+                  </div>
+                  <div class="small-muted small">Registration & attendee management</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience" class="py-5">
+      <div class="container">
+        <h2 class="mb-4">Experience</h2>
+        <div class="row g-4">
+          <div class="col-md-6" data-scroll-animation="fadeInUp">
+            <div class="card card-hero p-3">
+              <h6>Web Developer — Bits and Bytes Services</h6>
+              <div class="small-muted small mb-2">2024 — Present</div>
+              <ul class="small-muted small">
+                <li>Full lifecycle web development for clients.</li>
+                <li>Built responsive UI components and deployment pipelines.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-6" data-scroll-animation="fadeInUp" data-scroll-delay="100">
+            <div class="card card-hero p-3">
+              <h6>Web Developer Intern — Netleap IT</h6>
+              <div class="small-muted small mb-2">2023 — 2024</div>
+              <ul class="small-muted small">
+                <li>Front-end development with Bootstrap and real projects.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="py-5">
+      <div class="container">
+        <div class="text-center mb-4">
+          <h2>Contact</h2>
+          <p class="small-muted">Let's build something together — tell me about your project.</p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-5" data-scroll-animation="fadeInLeft">
+            <div class="card contact-card p-4">
+              <h5 class="text-light">Contact Info</h5>
+              <p class="small-muted"><i class="bi bi-geo-alt"></i> Pushpak Park, Shani Chowk, Nashik, India</p>
+              <p class="small-muted"><i class="bi bi-telephone"></i> +91 77559 65132</p>
+              <p class="small-muted"><i class="bi bi-envelope"></i> <a href="mailto:rahulekadi@gmail.com" class="link-light">rahulekadi@gmail.com</a></p>
+              <div class="mt-3 social-icons">
+                <a href="https://linkedin.com" target="_blank" rel="noopener"><i class="bi bi-linkedin"></i></a>
+                <a href="https://github.com/Rahul858520" target="_blank" rel="noopener"><i class="bi bi-github"></i></a>
+                <a href="mailto:rahulekadi@gmail.com"><i class="bi bi-envelope-fill"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-7" data-scroll-animation="fadeInRight">
+            <div class="card p-4 contact-card">
+              <form action="https://formspree.io/f/your_form_id" method="POST" novalidate>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label small text-light">Name</label>
+                    <input class="form-control" name="name" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label small text-light">Email</label>
+                    <input class="form-control" type="email" name="email" required>
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label small text-light">Message</label>
+                    <textarea class="form-control" rows="6" name="message" required></textarea>
+                  </div>
+                  <div class="col-12 text-end">
+                    <button class="btn btn-primary">Send Message</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="text-center">
+      <div class="container">
+        <div class="d-flex justify-content-between align-items-center flex-column flex-md-row">
+          <div class="small small-muted mb-2 mb-md-0">&copy; 2025 Rahul Ekadi</div>
+          <div>
+            <a href="#" class="small link-light me-3">Privacy</a>
+            <a href="#" class="small link-light">Terms</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scroll to top -->
+    <div class="scroll-top" id="scrollTop" title="Scroll to top">
+      <i class="bi bi-arrow-up-short" style="font-size:1.4rem;color:var(--icon-color);"></i>
+    </div>
+
+    <!-- Project Modals (kept as before) -->
+    <div class="modal fade" id="projectModal1" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content bg-dark text-light">
+          <div class="modal-header border-0">
+            <h5 class="modal-title">Bits and Bytes Services</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p class="small-muted">A professional website built for a local technology services company. It includes responsive layouts, contact forms and CMS integration.</p>
+            <a href="https://bitsandbytesservices.com/" target="_blank" class="btn btn-primary">Open Project</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="projectModal2" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content bg-dark text-light">
+          <div class="modal-header border-0">
+            <h5 class="modal-title">Car Rental Website</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p class="small-muted">Client-facing booking website with search, listings and booking flow.</p>
+            <a href="#" class="btn btn-primary">View Repo</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="projectModal3" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content bg-dark text-light">
+          <div class="modal-header border-0">
+            <h5 class="modal-title">Event Management System</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p class="small-muted">An admin console for creating events, registrations, and reporting.</p>
+            <a href="#" class="btn btn-primary">View Demo</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+
+    <script>
+      // animate on scroll (intersection observer)
+      document.addEventListener("DOMContentLoaded", function () {
+        const animated = document.querySelectorAll('[data-scroll-animation]');
+        const io = new IntersectionObserver((entries, obs) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const anim = entry.target.dataset.scrollAnimation || 'fadeInUp';
+              entry.target.classList.add('animate__animated', 'animate__' + anim);
+              obs.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12 });
+        animated.forEach(el => io.observe(el));
+
+        // skill bar fill animation
+        const fills = document.querySelectorAll('.skill-fill');
+        function runSkillAnim() {
+          fills.forEach(f => {
+            const val = f.getAttribute('data-fill') || '80%';
+            f.style.width = val;
+          });
+        }
+        // trigger once skills are visible
+        const skillsSection = document.getElementById('skills');
+        if (skillsSection) {
+          const sIO = new IntersectionObserver((entries, sObs) => {
+            entries.forEach(en => {
+              if (en.isIntersecting) { runSkillAnim(); sObs.disconnect(); }
+            });
+          }, { threshold: 0.25 });
+          sIO.observe(skillsSection);
+        } else { runSkillAnim(); }
+
+        // scroll top
+        const scrollTop = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+          if (window.scrollY > 300) scrollTop.style.display = 'flex';
+          else scrollTop.style.display = 'none';
+        });
+        scrollTop.style.display = 'none';
+        scrollTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        // theme toggle (CSS-driven)
+        const themeToggle = document.getElementById('themeToggle');
+        // initialize icon based on current theme (default -> dark)
+        themeToggle.innerHTML = '<i class="bi bi-moon-fill"></i>';
+        themeToggle.addEventListener('click', () => {
+          const htmlEl = document.documentElement;
+          const isLight = htmlEl.hasAttribute('data-light');
+          if (!isLight) {
+            htmlEl.setAttribute('data-light', '1');
+            themeToggle.innerHTML = '<i class="bi bi-sun-fill"></i>';
+          } else {
+            htmlEl.removeAttribute('data-light');
+            themeToggle.innerHTML = '<i class="bi bi-moon-fill"></i>';
+          }
+        });
+      });
+    </script>
+
+  </body>
+</html>
